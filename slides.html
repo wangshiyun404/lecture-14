@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>第14周｜未来大学的形态与知识使命（二）</title>
+  <style>
+    :root{
+      --paper:#fffaf0;
+      --paper2:#fff4d8;
+      --ink:#0e2142;
+      --muted:#5c677d;
+      --blue:#164cff;
+      --cyan:#08a7ff;
+      --orange:#ff7a1a;
+      --green:#1aa66a;
+      --pink:#ff4f8b;
+      --purple:#6b4eff;
+      --yellow:#fff05a;
+      --line:rgba(14,33,66,.18);
+      --soft:rgba(22,76,255,.10);
+      --shadow:9px 9px 0 rgba(22,76,255,.13);
+      --radius:28px;
+      --max:1180px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      color:var(--ink);
+      font-family:"Noto Sans SC","Microsoft YaHei",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(255,122,26,.18), transparent 28%),
+        radial-gradient(circle at 85% 4%, rgba(8,167,255,.20), transparent 26%),
+        linear-gradient(90deg, rgba(14,33,66,.045) 1px, transparent 1px),
+        linear-gradient(rgba(14,33,66,.045) 1px, transparent 1px),
+        var(--paper);
+      background-size:auto, auto, 28px 28px, 28px 28px, auto;
+      line-height:1.65;
+    }
+    a{color:var(--blue);text-decoration:none;border-bottom:1px dashed rgba(22,76,255,.45)}
+    .deck{max-width:var(--max);margin:0 auto;padding:24px 18px 80px}
+    .topbar{position:sticky;top:0;z-index:20;backdrop-filter:blur(14px);background:rgba(255,250,240,.82);border-bottom:1px solid var(--line)}
+    .topbar-inner{max-width:var(--max);margin:0 auto;display:flex;align-items:center;gap:12px;justify-content:space-between;padding:10px 18px}
+    .brand{font-weight:950;letter-spacing:.06em;font-size:14px;text-transform:uppercase;color:var(--blue)}
+    .nav{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+    .nav a,.toggle-note{border:1px solid var(--line);background:white;padding:7px 10px;border-radius:999px;font-size:13px;color:var(--ink);box-shadow:2px 2px 0 rgba(14,33,66,.06);cursor:pointer}
+    .nav a:hover,.toggle-note:hover{background:var(--yellow)}
+    .hero{min-height:74vh;display:grid;grid-template-columns:1.15fr .85fr;gap:28px;align-items:center;padding:42px 0 16px}
+    .kicker{display:inline-flex;gap:8px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 12px;box-shadow:4px 4px 0 rgba(255,122,26,.18);font-weight:850;color:var(--orange);letter-spacing:.04em}
+    h1{font-size:clamp(42px,8vw,96px);line-height:.98;margin:18px 0 14px;letter-spacing:-.08em;font-weight:1000}
+    h1 .accent{display:block;color:var(--blue);text-shadow:4px 4px 0 rgba(255,240,90,.9)}
+    .subtitle{font-size:clamp(18px,2vw,25px);max-width:760px;color:#243653;font-weight:650}
+    .meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+    .pill{display:inline-flex;align-items:center;gap:7px;padding:9px 12px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:14px;font-weight:700}
+    .hero-card{position:relative;border:2px solid var(--ink);border-radius:var(--radius);overflow:hidden;background:white;box-shadow:var(--shadow);min-height:520px}
+    .hero-card img{width:100%;height:315px;object-fit:cover;display:block;filter:saturate(1.1) contrast(1.04)}
+    .hero-card .caption{padding:20px 22px 24px}
+    .stamp{position:absolute;right:18px;top:18px;background:var(--yellow);border:2px solid var(--ink);border-radius:999px;padding:9px 12px;font-weight:1000;transform:rotate(4deg)}
+    .section{margin:50px 0;padding:36px;border:1.5px solid var(--line);background:rgba(255,255,255,.75);border-radius:var(--radius);box-shadow:0 16px 42px rgba(14,33,66,.06)}
+    .section.dark{background:linear-gradient(135deg,#0e2142,#163f78);color:white;border-color:rgba(255,255,255,.22)}
+    .section.dark .muted,.section.dark .note{color:rgba(255,255,255,.78)}
+    .section-title{display:flex;gap:16px;align-items:flex-start;margin-bottom:20px}
+    .num{min-width:48px;height:48px;border-radius:16px;background:var(--blue);color:#fff;display:grid;place-items:center;font-weight:1000;box-shadow:4px 4px 0 rgba(255,240,90,.75)}
+    h2{font-size:clamp(28px,4vw,48px);line-height:1.08;margin:0;letter-spacing:-.04em}
+    h3{font-size:24px;line-height:1.25;margin:0 0 10px}
+    .muted{color:var(--muted)}
+    .lead{font-size:19px;font-weight:650;color:#243653}
+    .grid{display:grid;gap:18px}
+    .grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .grid.four{grid-template-columns:repeat(4,minmax(0,1fr))}
+    .card{background:#fff;border:1.4px solid var(--line);border-radius:24px;padding:20px;box-shadow:5px 5px 0 rgba(14,33,66,.06)}
+    .card.pop{border:2px solid var(--ink);box-shadow:7px 7px 0 rgba(255,122,26,.16)}
+    .card img{width:100%;height:160px;object-fit:cover;border-radius:18px;margin-bottom:14px;border:1px solid var(--line)}
+    .tag{display:inline-block;font-size:12px;font-weight:900;color:#fff;background:var(--ink);border-radius:999px;padding:4px 9px;margin:0 5px 8px 0;letter-spacing:.03em}
+    .tag.blue{background:var(--blue)}.tag.orange{background:var(--orange)}.tag.green{background:var(--green)}.tag.pink{background:var(--pink)}.tag.purple{background:var(--purple)}
+    .big-stat{font-size:42px;font-weight:1000;letter-spacing:-.06em;color:var(--blue);line-height:1}.dark .big-stat{color:var(--yellow)}
+    .stat-label{font-weight:800;margin-top:4px}
+    .flow{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;align-items:stretch;margin-top:18px}
+    .step{position:relative;background:white;border:1.5px solid var(--line);border-radius:22px;padding:18px;min-height:148px}
+    .step::after{content:"→";position:absolute;right:-12px;top:46%;font-size:22px;color:var(--orange);font-weight:1000}.step:last-child::after{content:""}
+    .timeline{position:relative;margin-top:20px;padding:0 0 0 22px;border-left:3px solid var(--blue)}
+    .titem{margin:0 0 18px 0;position:relative;background:#fff;border:1px solid var(--line);border-radius:20px;padding:16px}
+    .titem::before{content:"";position:absolute;left:-32px;top:21px;width:16px;height:16px;border-radius:50%;background:var(--orange);border:3px solid #fff;box-shadow:0 0 0 2px var(--orange)}
+    .tabs{display:flex;flex-wrap:wrap;gap:9px;margin:18px 0}
+    .tab{border:1.5px solid var(--line);background:white;border-radius:999px;padding:9px 13px;cursor:pointer;font-weight:900}
+    .tab.active{background:var(--blue);border-color:var(--blue);color:white}
+    .case-detail{display:none;animation:fade .3s ease}.case-detail.active{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:stretch}
+    @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+    .quote{font-size:23px;line-height:1.45;font-weight:850;background:rgba(255,240,90,.5);border-left:6px solid var(--orange);padding:18px;border-radius:18px;margin:18px 0}
+    .source{font-size:12px;color:var(--muted);margin-top:8px}.dark .source{color:rgba(255,255,255,.74)}
+    .teacher-note{display:none;margin-top:12px;padding:12px 14px;border-radius:18px;background:#f0f6ff;border:1px dashed rgba(22,76,255,.45);color:#243653;font-size:14px}.show-notes .teacher-note{display:block}
+    .activity{border:2px solid var(--ink);border-radius:28px;background:linear-gradient(135deg,#fff,var(--paper2));box-shadow:var(--shadow);padding:22px}
+    .choices{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
+    .choice{border:1.5px solid var(--line);border-radius:18px;background:white;padding:14px;cursor:pointer;font-weight:800;min-height:96px}
+    .choice:hover{background:var(--yellow)}.choice.selected{background:#e8fff5;border-color:var(--green);box-shadow:0 0 0 3px rgba(26,166,106,.13)}
+    .result{margin-top:16px;background:#10233f;color:white;border-radius:20px;padding:18px;display:none}.result.show{display:block}
+    .quiz{display:grid;gap:12px}
+    .quiz button{text-align:left;border:1.5px solid var(--line);border-radius:18px;background:#fff;padding:14px;cursor:pointer;font-weight:750;color:var(--ink)}
+    .quiz button.correct{background:#e8fff5;border-color:var(--green)}.quiz button.wrong{background:#fff0f2;border-color:var(--pink)}
+    .feedback{min-height:32px;font-weight:900;color:var(--blue)}
+    .table-wrap{overflow:auto;border:1px solid var(--line);border-radius:22px;background:white}
+    table{width:100%;border-collapse:collapse;min-width:760px}th,td{padding:14px 16px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{background:#f7f8ff;font-weight:1000}tr:last-child td{border-bottom:none}
+    .warning{background:#fff7ed;border:1px solid rgba(255,122,26,.35);border-radius:22px;padding:18px}
+    .video-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.video{background:#fff;border:1px solid var(--line);border-radius:22px;overflow:hidden}.video iframe{width:100%;aspect-ratio:16/9;border:0;display:block}.video .vbody{padding:14px}
+    .sources{font-size:14px}.sources li{margin:8px 0}
+    .print-tip{position:fixed;bottom:18px;right:18px;background:var(--ink);color:white;border-radius:999px;padding:11px 14px;box-shadow:0 10px 30px rgba(0,0,0,.18);font-size:13px;z-index:25}
+    .footer{margin:50px 0 0;text-align:center;color:var(--muted);font-size:14px}
+    @media (max-width:900px){.hero,.grid.two,.grid.three,.grid.four,.case-detail.active,.video-grid{grid-template-columns:1fr}.flow{grid-template-columns:1fr}.step::after{display:none}.choices{grid-template-columns:1fr}.hero-card{min-height:auto}.topbar-inner{align-items:flex-start;flex-direction:column}.section{padding:24px}.nav{justify-content:flex-start}}
+    @media print{.topbar,.print-tip,.toggle-note,.nav,.video iframe{display:none}.section{break-inside:avoid;box-shadow:none;background:white}.teacher-note{display:block}.deck{max-width:100%;padding:0}.hero{min-height:auto}.hero-card{box-shadow:none}.card,.activity{box-shadow:none}}
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">知识、大学与发展 · Week 14</div>
+      <div class="nav">
+        <a href="#logic">核心逻辑</a><a href="#cases">案例库</a><a href="#data">数据墙</a><a href="#activity">课堂任务</a><a href="#risk">边界反思</a><a href="#sources">来源</a>
+        <button class="toggle-note" onclick="document.body.classList.toggle('show-notes')">教师备注</button>
+      </div>
+    </div>
+  </div>
+
+  <main class="deck">
+    <section class="hero" id="cover">
+      <div>
+        <span class="kicker">未来大学的形态与知识使命（二）</span>
+        <h1>大学与城市、产业的<span class="accent">融合发展</span></h1>
+        <p class="subtitle">从“校园里的大学”走向“城市中的大学”：理解大学如何成为区域创新生态、产业升级与公共生活的关键节点，同时警惕商业化、空间排斥与学术自主的边界问题。</p>
+        <div class="meta">
+          <span class="pill">课程主题：未来大学</span><span class="pill">关键词：创新城区 / 三螺旋 / 产学研</span><span class="pill">对象：本科通识课</span>
+        </div>
+        <div class="teacher-note">建议开场：请学生先回答：“如果汕头大学要更深地服务汕头，它应该先改变校园、课程、科研，还是城市连接方式？”把本节课从“宏大叙事”拉回学生所在城市。</div>
+      </div>
+      <div class="hero-card">
+        <span class="stamp">City × University × Industry</span>
+        <img src="https://news.mit.edu/sites/default/files/download/201605/MIT-Kendall-03-press.jpg" alt="MIT Kendall Square innovation district" />
+        <div class="caption">
+          <h3>课堂问题</h3>
+          <p class="lead">一所大学为什么会改变一座城市？一座城市又如何反过来塑造大学的使命？</p>
+          <p class="source">图像：MIT News, Kendall Square Initiative。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="overview">
+      <div class="section-title"><div class="num">0</div><div><h2>第13—15周收束单元的位置</h2><p class="muted">第14周承接“技术变革与终身教育”，转入“大学如何嵌入城市与产业”，并为第15周“跨学科与知识生产模式变革”铺垫。</p></div></div>
+      <div class="grid three">
+        <div class="card"><span class="tag blue">第13周</span><h3>学习不再只发生在校园</h3><p>技术变革、学习型社会、终身教育、微证书与AI学习生态。</p></div>
+        <div class="card pop"><span class="tag orange">第14周</span><h3>大学不再只是校园边界内的机构</h3><p>大学—城市—产业互相塑造，形成创新生态与区域发展动力。</p></div>
+        <div class="card"><span class="tag green">第15周</span><h3>知识不再只由单一学科生产</h3><p>跨学科研究、Mode 2、团队科学与大学使命的再平衡。</p></div>
+      </div>
+    </section>
+
+    <section class="section" id="logic">
+      <div class="section-title"><div class="num">1</div><div><h2>核心逻辑：从“象牙塔”到“区域创新生态”</h2><p class="muted">本节课不把大学等同为“给城市赚钱的工具”，而是分析大学如何在知识、空间、人才、资本与公共价值之间形成复杂关系。</p></div></div>
+      <div class="flow">
+        <div class="step"><span class="tag blue">知识</span><h3>研究发现</h3><p>基础研究、应用研究、交叉研究成为城市创新的知识源。</p></div>
+        <div class="step"><span class="tag green">人才</span><h3>学生与校友</h3><p>人才流动、创业网络、实习实践把大学嵌入产业链。</p></div>
+        <div class="step"><span class="tag orange">空间</span><h3>创新城区</h3><p>实验室、企业、孵化器、住宅、公共空间在城市中混合。</p></div>
+        <div class="step"><span class="tag purple">制度</span><h3>中介组织</h3><p>技术转移办公室、大学科技园、产业学院、联合实验室。</p></div>
+        <div class="step"><span class="tag pink">价值</span><h3>公共责任</h3><p>不能只看GDP，也要看包容、可持续、学术自由与公平。</p></div>
+      </div>
+      <div class="quote">理论抓手：三螺旋模型把大学、产业、政府看作知识经济中的互动主体；今天还要加入社区、公民社会与生态可持续的维度。</div>
+      <p>欧洲大学协会的研究指出，大学在区域创新生态中的角色正在从“线性技术转移”转向与企业、政府、公共组织共同创造知识、共同编排创新生态。<a href="https://www.eua.eu/publications/reports/the-role-of-universities-in-regional-innovation-ecosystems.html" target="_blank">EUA, 2019</a></p>
+      <div class="teacher-note">讲解提示：可以把“线性技术转移”画成“大学发明→企业拿去用”，再画出“共同定义问题→共同研发→共同培养人才→共同承担风险”的网络图。</div>
+    </section>
+
+    <section class="section dark" id="data">
+      <div class="section-title"><div class="num">2</div><div><h2>数据墙：创新越来越表现为“城市群/区域集群”</h2><p class="muted">WIPO《全球创新指数》创新集群排名把专利、科学论文与风险资本等纳入观察，适合引导学生理解“大学—城市—产业”不是抽象口号，而是可被观察的空间现象。</p></div></div>
+      <div class="grid four">
+        <div class="card"><div class="big-stat">#1</div><div class="stat-label">深圳—香港—广州</div><p>2025年全球创新集群第一。</p></div>
+        <div class="card"><div class="big-stat">#3</div><div class="stat-label">圣何塞—旧金山</div><p>斯坦福、硅谷与风险资本长期互动。</p></div>
+        <div class="card"><div class="big-stat">24</div><div class="stat-label">中国入选前100集群数量</div><p>中国连续第二年拥有最多前100创新集群。</p></div>
+        <div class="card"><div class="big-stat">≈1/5</div><div class="stat-label">PCT申请贡献</div><p>前两大集群合计约占全球PCT申请近五分之一。</p></div>
+      </div>
+      <p class="source">数据来源：WIPO Global Innovation Index 2025 Innovation Cluster Ranking。</p>
+    </section>
+
+    <section class="section" id="cases">
+      <div class="section-title"><div class="num">3</div><div><h2>案例库：六种“大学嵌入城市与产业”的典型路径</h2><p class="muted">点击切换案例。建议课堂上分组阅读，每组判断：这个案例中大学承担了什么角色？城市和产业又给大学带来了什么约束？</p></div></div>
+      <div class="tabs" id="caseTabs">
+        <button class="tab active" data-case="mit">MIT × Kendall Square</button>
+        <button class="tab" data-case="stanford">Stanford × Silicon Valley</button>
+        <button class="tab" data-case="cambridge">Cambridge Cluster</button>
+        <button class="tab" data-case="cornell">Cornell Tech × NYC</button>
+        <button class="tab" data-case="shenzhen">深圳虚拟大学园</button>
+        <button class="tab" data-case="sysu">中山大学科技园</button>
+      </div>
+
+      <div class="case-detail active" id="case-mit">
+        <div class="card pop"><img src="https://news.mit.edu/sites/default/files/download/201605/MIT-Kendall-04-press.jpg" alt="MIT Kendall Square" /><h3>MIT × Kendall Square：从停车场到创新城区</h3><p>MIT Kendall Square Initiative 将原本的停车场与东校区周边空间转向研究、商业、住房、零售、公共开放空间和MIT Museum等混合功能，强调把大学入口变成城市创新社区的一部分。</p><p class="source">来源：MIT News；Kendall Square at MIT。</p></div>
+        <div class="card"><span class="tag blue">课堂抓手</span><h3>空间不是背景，而是创新机制</h3><p>Brookings把Kendall Square归入“Anchor Plus”创新城区：大型锚定机构、相关企业、创业者和衍生企业围绕商业化创新形成密集联系。</p><ul><li>大学作为锚定机构</li><li>研发企业与实验室邻近</li><li>公共空间制造偶遇与协作</li><li>但也带来住房负担与空间公平问题</li></ul></div>
+      </div>
+
+      <div class="case-detail" id="case-stanford">
+        <div class="card pop"><img src="https://enterprise.wikimedia.com/uploads/2026/01/HAI-stanford-event-feature-scaled.jpg" alt="Stanford campus" /><h3>Stanford × Silicon Valley：校友、文化与风险资本网络</h3><p>2012年斯坦福工程学院报道的研究估计，斯坦福创业者创立公司的年收入约2.7万亿美元，并创造约540万个就业岗位。注意：这是校友与创业生态影响，并不等于大学直接产值。</p><p class="source">来源：Stanford Engineering, 2012。</p></div>
+        <div class="card"><span class="tag orange">课堂抓手</span><h3>大学不只是“技术源”，也是“创业文化和社会网络”</h3><p>斯坦福案例特别适合讨论：课程、导师、校友、VC、产业界实习、开放式创业文化如何构成长期生态。也要追问：这种模式能否复制到所有城市？</p></div>
+      </div>
+
+      <div class="case-detail" id="case-cambridge">
+        <div class="card pop"><img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Cambridge_Science_Park_Innovation_Centre.jpg" alt="Cambridge Science Park" /><h3>Cambridge Cluster：大学创新机构与地方集群</h3><p>剑桥大学创新部门Cambridge Enterprise 2024年度回顾显示，2023—2024年形成25家新的衍生企业，总投资组合达174家公司，同时支持超过450项专利申请和750多项商业及研究许可。</p><p class="source">来源：University of Cambridge News, 2025。</p></div>
+        <div class="card"><span class="tag green">课堂抓手</span><h3>“知识转化”需要专业中介</h3><p>从实验室到企业不是自然发生的。它需要技术评估、知识产权、早期投资、行业连接、创业指导与长期耐心资本。</p></div>
+      </div>
+
+      <div class="case-detail" id="case-cornell">
+        <div class="card pop"><img src="https://upload.wikimedia.org/wikipedia/commons/3/31/Cornell_buildings_on_Roosevelt_Island_from_LIC_%2841675%29.jpg" alt="Cornell Tech campus" /><h3>Cornell Tech × NYC：城市出题，大学建新 campus</h3><p>2011年Cornell Tech赢得纽约市应用科学竞赛，项目获得罗斯福岛土地和1亿美元城市资本，用于建设20亿美元、200万平方英尺的科技校园；2017年一期开放。</p><p class="source">来源：Bloomberg Philanthropies；Cornell Tech。</p></div>
+        <div class="card"><span class="tag purple">课堂抓手</span><h3>城市政府可以主动“采购未来大学”</h3><p>这不是传统大学自然扩张，而是城市以产业升级为目标，引入大学作为长期创新基础设施。讨论题：这类项目更像教育投资、产业政策，还是城市更新？</p></div>
+      </div>
+
+      <div class="case-detail" id="case-shenzhen">
+        <div class="card pop"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Commercial_area_of_futian_to_east2020.jpg/1200px-Commercial_area_of_futian_to_east2020.jpg" alt="Shenzhen skyline" /><h3>深圳虚拟大学园：一园多校、市校共建</h3><p>深圳市科技创新局2025年消息称，深圳虚拟大学园已建立55家研究院和433家研发中心，形成从学士到博士的学历教育及企业定制化培训体系，累计孵化科技企业2000余家。</p><p class="source">来源：深圳市科技创新局，2025。</p></div>
+        <div class="card"><span class="tag pink">课堂抓手</span><h3>没有传统综合大学集群的城市，如何连接全球高校资源？</h3><p>深圳案例的启发在于：城市不一定等待大学自然成长，也可以通过平台化机制把外部高校知识资源接入本地产业需求。</p></div>
+      </div>
+
+      <div class="case-detail" id="case-sysu">
+        <div class="card pop"><img src="https://upload.wikimedia.org/wikipedia/commons/2/29/Shenzhen_Skyline_from_Futian_District1.jpg" alt="Greater Bay Area skyline" /><h3>中山大学国家大学科技园：全链条创新枢纽</h3><p>中山大学2025年发布国家大学科技园建设方案，提出从“需求对接—技术研发—产业孵化—人才培养”升级为全链条创新枢纽，面向未来产业培育和成果转化。</p><p class="source">来源：中山大学新闻网，2025。</p></div>
+        <div class="card"><span class="tag blue">课堂抓手</span><h3>大学科技园不是“出租楼宇”，而是制度化的成果转化链条</h3><p>重点引导学生区分：空间载体、制度机制、人才培养和产业生态之间的关系。</p></div>
+      </div>
+    </section>
+
+    <section class="section" id="model">
+      <div class="section-title"><div class="num">4</div><div><h2>分析模型：大学—城市—产业融合的五层结构</h2><p class="muted">用这张表帮助学生把案例从“故事”转化为“分析框架”。</p></div></div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>层次</th><th>核心问题</th><th>典型机制</th><th>课堂追问</th></tr></thead>
+          <tbody>
+            <tr><td>空间层</td><td>大学在哪里？是否开放给城市？</td><td>创新城区、开放校园、公共空间、交通连接</td><td>大学是城市的一部分，还是城市中的孤岛？</td></tr>
+            <tr><td>知识层</td><td>研究如何进入真实问题？</td><td>联合实验室、技术转移、产业课题、政策咨询</td><td>问题由谁定义？知识为谁服务？</td></tr>
+            <tr><td>人才层</td><td>学生如何在城市与产业中学习？</td><td>实习实践、产业学院、项目制课程、创业教育</td><td>实践学习会不会变成廉价劳动力？</td></tr>
+            <tr><td>资本层</td><td>创新如何获得资源？</td><td>种子基金、校友基金、政府引导基金、VC网络</td><td>资本逻辑会不会改变学术优先级？</td></tr>
+            <tr><td>治理层</td><td>谁来协调多主体关系？</td><td>大学科技园、平台公司、地方政府、理事会机制</td><td>大学自主与公共责任如何平衡？</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section" id="videos">
+      <div class="section-title"><div class="num">5</div><div><h2>多模态素材：课上可播放的短视频入口</h2><p class="muted">建议每段只播放1—3分钟，围绕“空间—产业—人才”三个角度提问。</p></div></div>
+      <div class="video-grid">
+        <div class="video"><iframe src="https://www.youtube.com/embed/iBIW_MVKUAM" title="We are Cornell Tech" allowfullscreen></iframe><div class="vbody"><h3>Cornell Tech：为数字时代设计的城市校园</h3><p>看点：学科、企业、创业和城市空间如何被整合。</p></div></div>
+        <div class="video"><iframe src="https://www.youtube.com/embed/hOWK788vtqo" title="Cambridge Entrepreneurial Ecosystem" allowfullscreen></iframe><div class="vbody"><h3>Cambridge Enterprise：大学研究如何走向社会影响</h3><p>看点：创新中介组织如何支持知识转化。</p></div></div>
+        <div class="video"><iframe src="https://www.youtube.com/embed/dcNLIeBiUK0" title="Stanford Silicon Valley" allowfullscreen></iframe><div class="vbody"><h3>Stanford / Silicon Valley：创业生态与大学文化</h3><p>看点：学生、教师、校友与产业网络。</p></div></div>
+      </div>
+    </section>
+
+    <section class="section" id="activity">
+      <div class="section-title"><div class="num">6</div><div><h2>课堂互动：为汕头设计一个“大学—城市—产业融合”方案</h2><p class="muted">结合汕头大学、书院实践课程、澄海玩具产业带、数字创意与AI教育应用，做一个15分钟小组设计。</p></div></div>
+      <div class="activity">
+        <h3>任务：从下面选择3个机制，组合成一个“汕头未来大学创新节点”</h3>
+        <p>要求：必须同时回应人才培养、产业服务、公共价值三个维度。点击选项后生成讨论提示。</p>
+        <div class="choices" id="choices">
+          <div class="choice" data-text="产业学院适合把真实企业项目引入课程，但要防止课程被企业短期需求完全牵着走。">产业学院</div>
+          <div class="choice" data-text="大学科技园适合作为成果转化首站，但不能只做空间出租，关键是服务链条。">大学科技园</div>
+          <div class="choice" data-text="联合实验室能把企业问题转化为科研问题，但必须明确知识产权与发表自由。">联合实验室</div>
+          <div class="choice" data-text="书院实践空间能把低年级本科生纳入真实项目学习，是通识教育与城市服务的桥梁。">书院实践空间</div>
+          <div class="choice" data-text="城市创新街区强调开放公共空间和跨界交流，适合把大学从封闭校园推向城市生活。">城市创新街区</div>
+          <div class="choice" data-text="校友与地方企业导师网络能降低学生理解产业的门槛，也能形成长期信任关系。">校友/企业导师网络</div>
+        </div>
+        <div class="result" id="designResult"></div>
+      </div>
+      <div class="teacher-note">可让每组最后输出一句话：“我们设计的不是一个楼，而是一个机制。”这能防止学生把融合发展理解为简单建园区。</div>
+    </section>
+
+    <section class="section" id="quizsec">
+      <div class="section-title"><div class="num">7</div><div><h2>即时检测：不是所有“校企合作”都等于好大学</h2><p class="muted">用于课中或结尾，帮助学生辨析概念。</p></div></div>
+      <div class="grid two">
+        <div class="card"><h3>判断题</h3><p>“大学与产业融合越深，大学的学术使命就越强。”</p><div class="quiz"><button onclick="quiz(this,false)">A. 正确，因为产业会提供经费和真实需求</button><button onclick="quiz(this,true)">B. 不一定，关键在于是否守住学术自主、公共价值和人才培养质量</button><button onclick="quiz(this,false)">C. 错误，大学绝不应该与产业合作</button></div><div class="feedback" id="feedback"></div></div>
+        <div class="card"><h3>讨论题</h3><p>如果一个大学科技园每年孵化很多企业，但学生课程没有变化、教师基础研究被短期项目挤压、周边居民被高房价排挤，你会如何评价它？</p><p class="muted">建议答案方向：不能只用经济指标评价；要同时看知识使命、人才培养、社会公平与城市可持续。</p></div>
+      </div>
+    </section>
+
+    <section class="section" id="risk">
+      <div class="section-title"><div class="num">8</div><div><h2>边界反思：大学不能只剩“产业用处”</h2><p class="muted">融合发展并不意味着大学被城市增长机器和企业需求完全吸收。</p></div></div>
+      <div class="grid three">
+        <div class="warning"><h3>空间风险</h3><p>创新城区可能推高房价与生活成本，造成绅士化和原有居民、低收入学生、普通劳动者被排斥。</p></div>
+        <div class="warning"><h3>学术风险</h3><p>产业合作可能带来利益冲突、发表受限、知识产权争议和研究议程被短期商业目标牵引。</p></div>
+        <div class="warning"><h3>教育风险</h3><p>如果只强调就业和创业，大学容易忽视基础学科、人文学科、批判性思维与公共责任。</p></div>
+      </div>
+      <div class="quote">本节课的结论不是“大学要不要服务城市和产业”，而是“大学如何以知识使命服务城市和产业，同时不失去大学之为大学”。</div>
+      <p class="source">延伸观点：Times Higher Education 关于创新城区副作用的评论；AAUP 关于大学—产业关系中学术自主与学术自由原则的文件。</p>
+    </section>
+
+    <section class="section" id="ending">
+      <div class="section-title"><div class="num">9</div><div><h2>本节课收束：未来大学的城市使命</h2><p class="muted">可以用这三句话结束课堂，并连接第15周“跨学科研究与知识生产模式变革”。</p></div></div>
+      <div class="grid three">
+        <div class="card"><h3>第一，大学是城市的知识基础设施</h3><p>大学不仅培养学生，也保存、生产、解释和转化知识。</p></div>
+        <div class="card"><h3>第二，产业是大学面对真实问题的窗口</h3><p>但真实问题不等于短期商业需求，大学必须保有判断力。</p></div>
+        <div class="card"><h3>第三，未来大学是“开放而有边界”的大学</h3><p>开放给城市、产业和社会；有边界地守护学术自由与公共价值。</p></div>
+      </div>
+    </section>
+
+    <section class="section" id="sources">
+      <div class="section-title"><div class="num">R</div><div><h2>主要来源与可核查链接</h2><p class="muted">所有事实性表述均对应公开来源。课堂使用时可按需删减。</p></div></div>
+      <ol class="sources">
+        <li>zarazhangrui/beautiful-html-templates：HTML slide templates, MIT license. <a href="https://github.com/zarazhangrui/beautiful-html-templates" target="_blank">GitHub</a></li>
+        <li>MIT Kendall Square Initiative / Kendall Square at MIT：MIT将六处原停车场转化为含公共空间、零售、住房、办公与实验室的混合街区。<a href="https://www.kendallsquareatmit.com/home" target="_blank">Kendall Square at MIT</a></li>
+        <li>Brookings：The Rise of Innovation Districts，提出Anchor Plus等创新城区类型。<a href="https://www.brookings.edu/articles/rise-of-innovation-districts/" target="_blank">Brookings</a></li>
+        <li>Stanford Engineering：Stanford entrepreneurs economic impact, 2012. <a href="https://engineering.stanford.edu/news/study-reports-stanford-alumni-create-nearly-3-trillion-economic-impact" target="_blank">Stanford</a></li>
+        <li>University of Cambridge：Cambridge Enterprise 2024 Annual Review新闻，25 spinouts、174 portfolio companies、450+ patent applications、750+ licences. <a href="https://www.cam.ac.uk/news/cambridge-enterprise-reports-on-continued-growth-and-ambitious-plans-for-the-cambridge-cluster" target="_blank">Cambridge</a></li>
+        <li>Bloomberg Philanthropies：Cornell Tech, Roosevelt Island land, $100M city capital, $2B / 2M sq ft campus, 2017 opening. <a href="https://www.bloomberg.org/education/supporting-educational-institutions/cornell-tech/" target="_blank">Bloomberg</a></li>
+        <li>WIPO Global Innovation Index 2025：Innovation Cluster Ranking. <a href="https://www.wipo.int/en/web/global-innovation-index/2025/innovation-clusters" target="_blank">WIPO</a></li>
+        <li>EUA：The Role of Universities in Regional Innovation Ecosystems, 2019. <a href="https://www.eua.eu/publications/reports/the-role-of-universities-in-regional-innovation-ecosystems.html" target="_blank">EUA</a></li>
+        <li>UNESCO Institute for Lifelong Learning：Global Network of Learning Cities，用于连接第13周学习型社会与第14周城市学习生态。<a href="https://www.uil.unesco.org/en/learning-cities" target="_blank">UNESCO UIL</a></li>
+        <li>深圳市科技创新局：2025年深圳虚拟大学园联席会议，55家研究院、433家研发中心、孵化科技企业2000余家。<a href="https://stic.sz.gov.cn/gkmlpt/content/12/12503/post_12503808.html" target="_blank">深圳市科技创新局</a></li>
+        <li>中山大学新闻网：中山大学国家大学科技园建设方案，需求对接—技术研发—产业孵化—人才培养。<a href="https://www.sysu.edu.cn/news/info/2161/1389271.htm" target="_blank">中山大学</a></li>
+        <li>AAUP：Recommended Principles to Guide Academy-Industry Relationships，强调学术自由、自治与控制。<a href="https://www.aaup.org/sites/default/files/Academy-Industry%20Relationships_0.pdf" target="_blank">AAUP PDF</a></li>
+        <li>Times Higher Education：Universities must address the downsides of innovation districts，关于创新城区可能带来的绅士化和排斥效应。<a href="https://www.timeshighereducation.com/blog/universities-must-address-downsides-innovation-districts" target="_blank">THE</a></li>
+      </ol>
+    </section>
+
+    <div class="footer">© 课程《知识、大学与发展》｜第14周 HTML 互动课件｜建议课堂时长：90分钟</div>
+  </main>
+  <div class="print-tip">提示：点击右上“教师备注”可显示讲授提示</div>
+
+<script>
+  const tabs = document.querySelectorAll('#caseTabs .tab');
+  const details = document.querySelectorAll('.case-detail');
+  tabs.forEach(t=>t.addEventListener('click',()=>{
+    tabs.forEach(x=>x.classList.remove('active'));
+    details.forEach(d=>d.classList.remove('active'));
+    t.classList.add('active');
+    document.querySelector('#case-'+t.dataset.case).classList.add('active');
+  }));
+  const selected=[];
+  document.querySelectorAll('.choice').forEach(c=>c.addEventListener('click',()=>{
+    c.classList.toggle('selected');
+    const text=c.dataset.text;
+    const i=selected.indexOf(text);
+    if(i>=0) selected.splice(i,1); else selected.push(text);
+    const box=document.getElementById('designResult');
+    if(selected.length){
+      box.classList.add('show');
+      box.innerHTML='<b>讨论提示：</b><br>'+selected.slice(0,3).map((x,i)=>`${i+1}. ${x}`).join('<br>')+'<br><br>请补充：谁出题？谁投入？谁受益？谁承担风险？';
+    }else{box.classList.remove('show'); box.innerHTML=''}
+  }));
+  function quiz(btn, ok){
+    const parent=btn.parentElement;
+    parent.querySelectorAll('button').forEach(b=>{b.classList.remove('correct','wrong')});
+    btn.classList.add(ok?'correct':'wrong');
+    document.getElementById('feedback').textContent= ok ? '正确：融合发展必须同时接受“使命—制度—边界”的检验。' : '再想想：产业合作有价值，但不是越多越好、越深越好。';
+  }
+</script>
+</body>
+</html>
